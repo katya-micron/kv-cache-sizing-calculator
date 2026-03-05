@@ -22,8 +22,9 @@ class ModelConfig:
         self.num_attention_heads = config.get('num_attention_heads', 32)
         self.num_key_value_heads = config.get('num_key_value_heads', self.num_attention_heads)
 
-        # Calculate head dimension
-        self.head_dim = self.hidden_size // self.num_attention_heads
+        
+        # Get head dimension from config, or calculate if not present
+        self.head_dim = config.get('head_dim', self.hidden_size // self.num_attention_heads)
 
     def get_kv_bytes_per_token(self, dtype: str = 'fp16') -> int:
         """
